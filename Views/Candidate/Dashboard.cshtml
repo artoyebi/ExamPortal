@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Test>
+@inject ITestRepository testRepository
+@inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
+
+@{ViewBag.Title = "Candidate Dashboard";
+
+    var loggedInUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+}
+
+<h1 class="text-center">Candidate Dashboard</h1>
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3>Available Tests</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Duration(mins)</th>
+                        <th>No of Questions</th>
+                        <th>Created By</th>
+                        <th>Available From</th>
+                        <th>Available Till</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.Count() > 0)
+                    {
+                        foreach (var test in Model)
+                        {
+                            var numOfQstn = testRepository.LoadTestQuestions(test.Id).Count;
+
+                            <tr>
+                                <td>@test.Description</td>
+                                <td>@test.Duration</td>
+                                <td>@numOfQstn</td>
+                                <td>@test.CreatedBy</td>
+                                <td>@test.AvailableFrom</td>
+                                <td>@test.AvailableTill</td>
+                                <td>
+                                    <div class="row">
+                                        @if (testRepository.IsCandidateInTest(loggedInUserId, test.Id))
+                                        {
+                                            <a title="Take Test" asp-action="taketest" asp-controller="test" asp-route-testid="@test.Id" class="btn btn-primary"><i class="fas fa-play"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a title="Take Test" asp-action="taketest" asp-controller="test" asp-route-testid="@test.Id" class="btn btn-primary" onclick="return false"><i class="fas fa-play"></i></a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <span class="font-weight-bold">No test added yet...</span>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts{ 
+
+    <script>
+        function candidateNotInTest() {
+            
+        }
+    </script>
+
+}

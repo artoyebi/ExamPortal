@@ -1,0 +1,288 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/*@media (max-width: 420px){
+    .form-container{
+        width: 100%;
+    }
+}*/
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+  
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: white;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.form-container{
+    width: 60%;
+    border:20px thick;
+    border-radius: 5px;
+    box-shadow: #1878db 2px;
+    background-color: lightgray;
+    justify-content: center;
+
+}
+
+
+.form-control{
+    border-radius: 15px;
+}
+
+
+/*--------------------------------------------------------------*/
+.site-content {
+    background-image: linear-gradient(45deg, rgba(237,63,47,0.5) 1%,rgba(125,185,232,0.99) 99%,rgba(125,185,232,1) 100%), url("http://living-singapore.sg/wp-content/uploads/2017/12/rsz_st1J2WMuE8JJeN5WsA1v8DxhXBezXy1STMy3.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.site-title, .site-desc {
+    color: #fff;
+}
+
+.site-title {
+    margin-top: 30%;
+    margin-bottom: 6%;
+    font-size: 50px;
+}
+
+.site-desc {
+    font-size: 14px;
+    padding-left: 15%;
+}
+
+.site-btn1 {
+    margin-left: 20%;
+    background-color: black !important;
+    color: #fff;
+}
+
+.site-btn2 {
+    background-color: white !important;
+}
+
+.site-btn1, .site-btn2 {
+    margin-top: 5%;
+    margin-bottom: 40%;
+}
+
+hr {
+    padding-bottom: 12px;
+    animation: yourAnimation1 1s 1 0s ease-in-out;
+}
+
+@keyframes yourAnimation1 {
+    0% {
+        transform: rotate(0) translateX(150%);
+        opacity: 0;
+    }
+
+    94% {
+        transform: rotate(0) translateX(-10%);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: rotate(0) translateX(0%);
+        opacity: 1;
+    }
+}
+
+.elementToAnimate {
+}
+
+
+
+@keyframes yourAnimation {
+    0% {
+        transform: rotate(0) translateY(-80%);
+        opacity: 0;
+    }
+
+    60% {
+        transform: rotate(0);
+    }
+
+    77% {
+        transform: rotate(0) translateY(-10%);
+    }
+
+    100% {
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+.elementToAnimate {
+}
+
+
+.section-1 .heading-1 {
+    margin-top: 8%;
+}
+
+.section-1 .heading-2 {
+    margin-bottom: 5%;
+    font-size: 30px;
+}
+
+.section-1 .para-1 {
+    width: 60%;
+    margin-left: 20%;
+    margin-bottom: 5%;
+}
+
+.section-1 .card-text, .para-1 {
+    color: rgba(0,0,0,0.59);
+}
+
+.section-1 {
+    margin-bottom: 8%;
+}
+
+.section-2 .container-fluid {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url(https://image.freepik.com/fotos-gratis/designer-grafico-com-laptop-e-tableta-grafica_23-2147652928.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.section-2 .heading-1 {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding-left: 40px;
+    width: 80%;
+    color: whitesmoke !important;
+}
+
+.section-2 .para {
+    width: 80%;
+    color: whitesmoke !important;
+    margin-bottom: 5%;
+}
+
+.section-2 .btn {
+    margin-bottom: 10%;
+    width: 30%;
+    padding: 2%;
+}
+
+
+.section-3 {
+    margin-top: 6%;
+}
+
+    .section-3 i {
+        color: #0f3447;
+    }
+
+    .section-3 p {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+
+.section-4 {
+    margin-top: 8%;
+}
+
+    .section-4 .row .col-md-7, .col-md-5 {
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+
+
+    .section-4 .col-md-5 a {
+        font-size: 44px;
+        color: lightcoral !important;
+        text-decoration: none;
+        margin-left: 30%;
+    }
+
+    .section-4 p {
+        font-size: 16px;
+        color: white;
+        margin-top: 6%;
+        font-family: 'Roboto';
+        width: 100%;
+    }
+
+    .section-4 img {
+        border-radius: 12px;
+    }
+
+    .section-4 h1 {
+        text-transform: uppercase;
+        color: white;
+        margin-bottom: 6%;
+    }
+
+
+.social a, i {
+    text-decoration: none;
+    color: #0f3447;
+}

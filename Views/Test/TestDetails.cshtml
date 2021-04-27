@@ -1,0 +1,141 @@
+﻿@model TestDetailViewModel
+
+@{ ViewBag.Title = "Test Details";
+    var numOfQstn = Model.Test.Questions.Count;
+
+}
+
+
+<h1 class="text-center">Test Details</h1>
+
+<div class="form-container container text-center">
+
+    <form id="testform" asp-action="edittest" method="post" class="m-4">
+        <div id="initialform" class="m-4 p-4">
+
+            <div asp-validation-summary="All"></div>
+            <input asp-for="Test.Id" hidden />
+            <div class="form-group">
+                <label asp-for="Test.Description" class="col-form-label col-sm-2"></label>
+                <input asp-for="Test.Description" class="form-control col-sm-12" disabled />
+                <span asp-validation-for="Test.Description"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Test.Instruction" class="col-form-label col-sm-2"></label>
+                <textarea style="border-radius: 2px;" asp-for="Test.Instruction" class="form-control" disabled></textarea>
+                <span asp-validation-for="Test.Instruction"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Test.CreatedBy" class="col-form-label col-sm-2"></label>
+                <input asp-for="Test.CreatedBy" class="form-control col-sm-12" disabled />
+                <span asp-validation-for="Test.CreatedBy"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Test.Duration" class="col-form-label col-sm-2"></label>
+                <input asp-for="Test.Duration" class="form-control col-sm-12" disabled />
+                <span asp-validation-for="Test.Duration"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Test.AvailableFrom" class="col-form-label col-sm-2"></label>
+                <input asp-for="Test.AvailableFrom" class="form-control col-sm-12" disabled />
+                <span asp-validation-for="Test.AvailableFrom"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Test.AvailableTill" class="col-form-label col-sm-2"></label>
+                <input asp-for="Test.AvailableTill" class="form-control col-sm-12" disabled />
+                <span asp-validation-for="Test.AvailableTill"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label col-sm-2">Number of Questions</label>
+                <input id="numQstn" asp-for="@numOfQstn" class="form-control col-sm-12" disabled />
+
+            </div>
+
+
+            <a id="editbtn" class="btn btn-info" onclick="EnableEdit(true)">Edit Test</a>
+            <a class="btn btn-primary" asp-action="dashboard" asp-controller="examiner">Back</a>
+            <button id="editSubmit" type="submit" class="btn btn-primary" style="display:none">Submit</button>
+        </div>
+
+
+
+    </form>
+
+    
+</div>
+
+
+    <div class="container-fluid row">
+        @foreach (var question in Model.QuestionAndAnswers)
+        {
+            <div class="card col-sm-3">
+                <div class="card-header">
+                    <h3>@question.Question</h3>
+                </div>
+                <div class="card-body">
+                    <p>Correct Option: @question.Answer</p>
+                    <p>Option 1: @question.Option1</p>
+                    <p>Option 2: @question.Option2</p>
+                    <p>Option3: @question.Option3</p>
+                    <p>Assigned Score: @question.AssignedScore</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-controller="test" asp-action="editquestion" asp-route-questionId="@question.Id" class="btn btn-primary">Edit</a>
+                    <a asp-controller="test" onclick="return confirm('Do you want to delete?')" asp-action="deletequestion" asp-route-questionId="@question.Id" class="btn btn-danger">Delete</a>
+
+                </div>
+
+            </div>
+        }
+    </div>
+
+
+@section Scripts{
+
+    <script src="~/js/site.js"></script>
+    <script>
+        function EnableEdit(editClicked) {
+            if (editClicked) {
+                $('#editbtn').hide();
+                $('#editSubmit').show();
+
+                $('#initialform :input').prop("disabled", false);
+                $('#initialform :textarea').prop("disabled", false);
+            }
+            else {
+                $('#editbtn').show();
+                $('#editSubmit').hide();
+
+                $('#initialform :input').prop("disabled", true);
+                $('#initialform :textarea').prop("disabled", true);
+            }
+        }
+
+
+        //function EnableInputFields(qstnId, editClicked) {
+        //    var editbutton = 'editqstnbtn_' + qstnId;
+        //    var submitbutton = 'submitqstnbtn_' + qstnId;
+
+        //    if (editClicked) {
+        //        $('#' + editbutton).hide();
+        //        $('#' + submitbutton).show();
+        //        //$("#qstntestform :textarea").prop("disabled", false);
+        //        $("#qstntestform :input").prop("disabled", false);
+        //        alert("Clicked");
+        //    }
+        //    else {
+        //        $('#' + editbutton).show();
+        //        $('#' + submitbutton).hide();
+        //        //$("#qstntestform :textarea").prop("disabled", true);
+        //        $("#qstntestform :input").prop("disabled", true);
+        //    }
+        //}
+    </script>
+
+}

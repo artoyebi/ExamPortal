@@ -1,0 +1,260 @@
+﻿@model TakeTestViewModel
+
+
+@{ ViewBag.Title = "Test Page";}
+
+<div>
+    <h1 class="text-center">@Model.Test.Description</h1>
+
+</div>
+
+<div class="container"><div class="text-right"><h4 class="text-black-50"> <span class="text-success" id="timer"></span></h4></div></div>
+
+
+@{ var question = Model.Questions;
+    var testDuration = Model.Test.Duration;
+
+}
+
+<div class="container" id="instructionsCard">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-center">Instruction(s)</h3>
+        </div>
+        <div class="card-body">
+            <p>This test will take @testDuration minutes.</p>
+            <p class="card-text">@Model.Test.Instruction</p>
+        </div>
+        <div class="card-footer">
+            <a asp-action="dashboard" asp-controller="candidate" class="btn btn-outline-primary">Back</a>
+            <button id="startBoutton" class="btn btn-outline-success" onclick="showAll()">Continue</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    @for (int i = 0; i < question.Count(); i++)
+    {
+        <div id="questionCards" name="qstn_@i" class="container m-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        @{var qstNo = i + 1; }
+                        <div class="text-left col-10"><span><a title="Flag for Review" class="text-danger" href="#"><i class="fas fa-flag"></i></a> </span>  <span>Question No: <span class="qstNumTag">@qstNo</span> of @Model.PageCount </span>  </div>
+                        <div class="col-2">Mark: <span id="assignedScoreTag">@question.ElementAt(i).AssignedScore</span></div>
+                    </div>
+                </div>
+
+                <form action="/" method="post">
+                    <div class="card-body">
+                        <p id="qstnTag">@question.ElementAt(i).Question</p>
+                        <div id="allOptions">
+                            <div id="op1Div" class="form-check">
+                                <input type="radio" value="Questions[i].Option1" class="form-check-input" name="option" asp-for="Questions.ElementAt(i).Option1" />
+                                <label class="form-check-label" asp-for="Questions.ElementAt(i).Option1"></label>
+
+                            </div>
+                            <div id="op2Div" class="form-check">
+                                <input type="radio" value="Questions[i].Option2" class="form-check-input" name="option" asp-for="Questions.ElementAt(i).Option2" />
+                                <label class="form-check-label" asp-for="Questions.ElementAt(i).Option2"></label>
+
+                            </div>
+                            <div id="op3Div" class="form-check">
+                                <input type="radio" value="Questions[i].Option3" class="form-check-input" name="option" asp-for="Questions.ElementAt(i).Option3" />
+                                <label class="form-check-label" asp-for="Questions.ElementAt(i).Option3"></label>
+
+                            </div>
+                            <div id="answerDiv" class="form-check">
+                                <input type="radio" value="Questions[i].Answer" class="form-check-input" name="option" asp-for="Questions.ElementAt(i).Answer" />
+                                <label class="form-check-label" asp-for="Questions.ElementAt(i).Answer"></label>
+
+                            </div>
+                            <div>
+                                <input asp-for="Questions.ElementAt(i).Id" hidden />
+                                <input asp-for="Questions.ElementAt(i).TestId" hidden />
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <button class="btn btn-success">Save & Previous</button>
+
+                            <a id="clearRadio" class="btn btn-primary" href="#">Clear Response</a>
+                            <span class="text-right justify-content-end"><button type="submit" class="btn btn-success">Save & Next</button></span>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+
+
+<div id="pagingTag" class="container m-4">
+    <ul class="pagination">
+       
+        @for (int i = 1; i < (Model.PageCount + 1); i++)
+        {
+            <li class="@(i == ViewBag.qsn ? "page-item active" : "page-item")">
+                <a class="page-link" id="paginationId" onclick='getAsync("@Model.Test.Id", "@i")'>@i</a>
+                @*@Url.Action("taketest", new { testId = Model.Test.Id, qstn = i })*@
+            </li>
+
+        }
+        
+    </ul>
+    
+</div>
+</div>
+
+
+
+
+
+@section Scripts{
+
+    <script>
+
+        window.addEventListener("load", hideOnLoad);
+
+
+//--------------------------------------------------
+
+        var t = parseInt(@Model.Test.Duration);
+        let timeSecond = 60 * t;
+        const timeH = document.querySelector("#timer");
+
+
+
+        const countDown = setInterval(() => {
+            timeSecond--;
+            displayTime(timeSecond);
+            if (timeSecond == 0 || timeSecond < 1) {
+                endCount();
+                clearInterval(countDown);
+            }
+        }, 1000);
+
+        function displayTime(second) {
+            const min = Math.floor(second / 60);
+            const sec = Math.floor(second % 60);
+            timeH.innerHTML = `Time Remaining: ${min < 10 ? "0" : ""}${min}:${sec < 10 ? "0" : ""}${sec}`;
+        }
+
+        function endCount() {
+            timeH.innerHTML = "Time out";
+        }
+
+//----------------------------------------------------------
+
+
+        function hideOnLoad() {
+            console.log('onload active');
+            document.getElementById('instructionsCard').style.display = "block";
+            document.getElementById('questionCards').style.display = "none";
+
+            $('#timer').hide(); //= "none";
+            $('#pagingTag').hide(); //style.display = "none";
+            console.log('onload end');
+
+        }
+
+        //document.getElementById('startButton').addEventListener('click', showAll);
+
+        function showAll() {
+
+
+
+            console.log('click active');
+
+            confirm("Are you ready?")
+            document.getElementById('instructionsCard').style.display = "none";
+            document.getElementById('questionCards').style.display = "block";
+            $('#timer').show();
+            $('#timer').html("Time Remaining: 00:00");
+            console.log(t);
+            $('#pagingTag').show();
+            displayTime(timeSecond);
+            console.log('click end');
+
+
+        }
+
+
+        //--------------------------------------------
+        @*$('#paginationId').click (e => {
+            var testId = @Model.Test.Id;
+            var qstn = e.target.html();
+            var model = 'testId=' +@Model.Test.Id + '&qstn='+ e.target.html();
+            console.log(testId, qstn);
+            $.get("/Test/LoadQuestions", model, function (data, status) {
+                if (status == "success") {
+                    console.log("Done");
+                }
+                else {
+                    console.log('Failed');
+                    console.log(data);
+                }
+
+            });
+
+        });*@
+
+        function shuffleArray(arr) {
+            arr.sort(() => Math.random() - 0.5);
+        }
+
+        //var qsn = @ViewBag.qsn
+
+        function getAsync(testId, qstn) {
+
+
+            console.log(testId, qstn);
+            $.get(`/Test/LoadQuestions/?testId=${testId}&qstn=${qstn}`, function (data, status) {
+                if (status == "success") {
+
+                    let options = [data[0].option1, data[0].option2, data[0].option3, data[0].answer];
+                    shuffleArray(options);
+                    console.log(options);
+
+
+                    $('#qstnTag').html(`${data[0].question}`);
+                    $('#op1Div').html(`<input type="radio" name="choice" value="${options[0]}" class="form-check-input"/>
+                    <label class="form-check-label">${options[0]}</label>`);
+                    $('#op2Div').html(`<input type="radio" name="choice" value="${options[1]}" class="form-check-input"/>
+                    <label class="form-check-label">${options[1]}</label>`);
+                    $('#op3Div').html(`<input type="radio" name="choice" value="${options[2]}" class="form-check-input"/>
+                    <label class="form-check-label">${options[2]}</label>`);
+                    $('#answerDiv').html(`<input type="radio" name="choice" value="${options[3]}" class="form-check-input"/>
+                    <label class="form-check-label">${options[3]}</label>`);
+                    //$('#qstnNumTag').html(qsn);
+                    $('#assignedScoreTag').html(`${data[0].assignedScore}`);
+
+
+
+
+                    console.log(data);
+                    console.log("Done");
+                }
+                else {
+                    console.log('Failed');
+                    console.log(data);
+                }
+
+            });
+        }
+
+        $('#clearRadio').bind('click', function (){
+            $('input').prop('checked', false);
+
+        });
+
+    </script>
+
+
+
+}

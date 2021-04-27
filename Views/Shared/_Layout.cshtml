@@ -1,0 +1,66 @@
+﻿@inject SignInManager<ApplicationUser> signInManager;
+@inject RoleManager<IdentityRole> roleManager;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ExamPortal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="https://kit.fontawesome.com/bb22367667.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/qxdn2w1t1J2WMuE8JJeN5WsA1v8DxhXBezXy1STMy3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark text-dark bg-light border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><span style="color:lightcoral">Exam</span><span style="color: cadetblue">Portal</span></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Examiner"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="examiner" asp-action="dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="CreateTest">Add Test</a>
+                            </li>
+                        }
+                        else if (signInManager.IsSignedIn(User) && User.IsInRole("Candidate"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="candidate" asp-action="dashboard">Dashboard</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted text-dark">
+        <div class="container text-center ">
+            &copy; @DateTime.Now.Year - ExamPortal
+        </div>
+    </footer>
+    
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

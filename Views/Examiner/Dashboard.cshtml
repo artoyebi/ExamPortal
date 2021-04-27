@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Test>
+@inject ITestRepository testRepository
+
+@{ViewBag.Title = "Examiner Dashboard";
+    
+    
+    }
+
+<h1 class="text-center">Examiner Dashboard</h1>
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3>Available Tests</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Duration(mins)</th>
+                        <th>No of Questions</th>
+                        <th>Created By</th>
+                        <th>Available From</th>
+                        <th>Available Till</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.Count() > 0)
+                    {
+                        foreach (var test in Model)
+                        {
+                            var numOfQstn = testRepository.LoadTestQuestions(test.Id).Count;
+                            
+                            <tr>
+                                <td>@test.Description</td>
+                                <td>@test.Duration</td>
+                                <td>@numOfQstn</td>
+                                <td>@test.CreatedBy</td>
+                                <td>@test.AvailableFrom</td>
+                                <td>@test.AvailableTill</td>
+                                <td>
+                                    <div class="row">
+                                        <a title="Add Question" asp-action="addquestion" asp-controller="test" asp-route-testid="@test.Id" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        <a title="Details" asp-action="testdetails" asp-controller="test" asp-route-testid="@test.Id" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <form asp-action="deletetest">
+                                            <input asp-for="@test.Id" hidden/>
+                                            <button title="Delete"  type="submit"
+                                                     onclick="return confirm('Delete Test Permanently?')"
+                                                    class="btn btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <div class="font-weight-bold">No test added yet...</div>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

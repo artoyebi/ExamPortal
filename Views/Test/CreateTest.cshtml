@@ -1,0 +1,99 @@
+﻿@model CreateTestViewModel
+
+
+
+
+@{
+    ViewBag.Title = "Create Test";
+    
+}
+
+<h1 class="text-center">Create Test</h1>
+
+<div class="form-container container text-center">
+
+    <form id="testform" asp-action="createtest" method="post" class="m-4">
+        <div id="initialform" class="m-4 p-4">
+
+            <div asp-validation-summary="All"></div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="col-form-label col-sm-2"></label>
+                <input asp-for="Description" class="form-control col-sm-12" maxlength="15"/>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Instruction" class="col-form-label col-sm-2"></label>
+                <textarea style="border-radius: 2px;" asp-for="Instruction" class="form-control"></textarea>
+                <span asp-validation-for="Instruction"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CreatedBy" class="col-form-label col-sm-2"></label>
+                <input asp-for="CreatedBy" class="form-control col-sm-12" />
+                <span asp-validation-for="CreatedBy"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Duration" class="col-form-label col-sm-2"></label>
+                <input asp-for="Duration" class="form-control col-sm-12" />
+                <span asp-validation-for="Duration"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AvailableFrom" class="col-form-label col-sm-2"></label>
+                <input asp-for="AvailableFrom" class="form-control col-sm-12" />
+                <span asp-validation-for="AvailableFrom"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AvailableTill" class="col-form-label col-sm-2"></label>
+                <input asp-for="AvailableTill" class="form-control col-sm-12" />
+                <span asp-validation-for="AvailableTill"></span>
+            </div>
+
+            @*<div class="form-group">
+                <label asp-for="NumberofQstns" class="col-form-label col-sm-2"></label>
+                <input id="numQstn" asp-for="NumberofQstns" class="form-control col-sm-12" />
+                <span asp-validation-for="NumberofQstns"></span>
+            </div>*@
+        <a asp-action="dashboard" asp-controller="examiner" class="btn btn-info">Back</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+
+
+    </form>
+</div>
+
+@section Scripts{
+
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+          toolbar_mode: 'floating',
+       });
+
+
+
+
+        @*function loadQstnForms() {
+
+
+            document.getElementById("questionform").style.display = "block";
+            document.getElementById("initialform").style.display = "none";
+            //$('#' + questionForm).show();
+
+        }
+
+        @numOfForms = function getLength() {
+            $('#' + numQstn).value;
+        }*@
+
+    </script>
+
+
+}
+
