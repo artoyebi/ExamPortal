@@ -139,6 +139,10 @@ _TeamCity*
 *.coverage
 *.coveragexml
 
+
+#Personal Preference
+*.json
+
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml

@@ -68,6 +68,11 @@ namespace ExamPortal.Controllers
 
                 string roleName = "Examiner";
 
+                if (await roleManager.RoleExistsAsync(roleName))
+                {
+
+                }
+
                 var role = await roleManager.FindByNameAsync(roleName);
 
                 if (role == null)
